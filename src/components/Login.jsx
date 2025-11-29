@@ -3,28 +3,31 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import constants from "../utils/constant";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("");
-  const [password, setPassword] = useState("");
-const navigate = useNavigate()
+  const [emailId, setEmailId] = useState("dv@gmail.com");
+  const [password, setPassword] = useState("696969");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
-    
     try {
       const res = await axios.post(
-        "http://localhost:9000/login",
+        constants.baseUrl + "login",
         {
           email: emailId,
           password: password,
         },
         { withCredentials: true }
       );
-       dispatch(addUser(res.data))
-       return navigate("/");
+      dispatch(addUser(res.data));
+      return navigate("/");
     } catch (e) {
-      console.log(e);
+      setErrorMessage(
+        e?.response?.data || "Something went wrong, please try again later."
+      );
     }
   };
 
@@ -55,6 +58,7 @@ const navigate = useNavigate()
               />
             </fieldset>
           </div>
+          <p className="text-red-300">{errorMessage}</p>
           <div className="card-actions justify-center my-5">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
