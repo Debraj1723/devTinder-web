@@ -16,7 +16,7 @@ const Navbar = () => {
         {},
         { withCredentials: true }
       );
-      dispatch(removeUser());
+      dispatch({ type: "logout" });
       navigate("/login");
     } catch (e) {
       console.log(e);
