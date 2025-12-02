@@ -1,5 +1,5 @@
 const constants = {
-  baseUrl: "http://localhost:9000/",
+  baseUrl: "/api/",
 };
 
 export default constants;
