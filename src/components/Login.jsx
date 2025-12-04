@@ -8,8 +8,8 @@ import constants from "../utils/constant";
 const Login = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [emailId, setEmailId] = useState("dv@gmail.com");
-  const [password, setPassword] = useState("696969");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
