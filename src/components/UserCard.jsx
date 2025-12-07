@@ -30,21 +30,23 @@ const UserCard = ({ user }) => {
         <h2 className="card-title">
           {firstName + (lastName ? " " + lastName : "")}
         </h2>
+
         {age && gender && <p>{age + ", " + gender}</p>}
         <p>{about || "N.A."}</p>
-        <div className="card-actions justify-center my-4">
-          <button
-            className="btn btn-secondary"
+
+        <div className="card-actions justify-end">
+          <div
+            className="badge badge-secondary"
             onClick={() => handleSendRequest("Ignored", _id)}
           >
             Ignore
-          </button>
-          <button
-            className="btn btn-primary"
+          </div>
+          <div
+            className="badge badge-primary"
             onClick={() => handleSendRequest("Interested", _id)}
           >
             Interested
-          </button>
+          </div>
         </div>
       </div>
     </div>

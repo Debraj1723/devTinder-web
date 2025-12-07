@@ -19,6 +19,8 @@ const EditProfile = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
 
+  const [edit, setEdit] = useState(false);
+
   const saveProfile = async () => {
     try {
       const res = await axios.patch(
@@ -46,9 +48,9 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="flex justify-center my-10">
-      <div className="flex justify-center mx-10">
-        <div className="card bg-base-300 w-96 shadow-xl">
+    <div>
+      {edit && (
+        <div className="card">
           <div className="card-body">
             <h2 className="card-title justify-center">Edit profile</h2>
             <div className="">
@@ -120,16 +122,49 @@ const EditProfile = () => {
               <button className="btn btn-primary" onClick={saveProfile}>
                 Save
               </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => setEdit(false)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
-      </div>
-      <UserCard user={{ firstName, lastName, photoUrl, age, gender, about }} />
-      {showToast && <div className="toast toast-top toast-center">
-        <div className="alert alert-success">
-          <span>Profile data saved successfully.</span>
+      )}
+      {!edit && (
+        <div className="card bg-base-300 shadow-sm  m-5">
+          <figure>
+            <img src={photoUrl} alt="photo" />
+          </figure>
+          <div className="card-body">
+            <h2 className="card-title">
+              {firstName + (lastName ? " " + lastName : "")}
+            </h2>
+
+            {age && gender && <p>{age + ", " + gender}</p>}
+            <p>{about || "N.A."}</p>
+
+            <div className="card-actions justify-end">
+              <div
+                className="badge badge-primary"
+                onClick={() => {
+                  setEdit(true);
+                }}
+              >
+                Edit profile
+              </div>
+            </div>
+          </div>
         </div>
-      </div>}
+      )}
+      {showToast && (
+        <div className="toast toast-top toast-center">
+          <div className="alert alert-success">
+            <span>Profile data saved successfully.</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

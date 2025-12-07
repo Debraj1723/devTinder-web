@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./NavBar";
 import Footer from "./Footer";
 import constants from "../utils/constant";
@@ -7,8 +7,10 @@ import { addUser } from "../utils/userSlice";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Menu from "./Menu";
 
 const Body = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((store) => store.user);
@@ -20,23 +22,33 @@ const Body = () => {
       });
       dispatch(addUser(user.data));
     } catch (e) {
-      if(e.status === 401){
+      if (e.status === 401) {
         navigate("/login");
       }
     }
   };
 
   useEffect(() => {
-    if (!userData || !userData._id){
+    if (!userData || !userData._id) {
       fetchUser();
     }
   }, []);
 
   return (
-    <div>
+    <div className="max-w-[500px] mx-auto h-screen">
       <Navbar />
-      <Outlet />
-      <Footer />
+      <div  className="h-[calc(100vh-64px-82px)]  w-full overflow-y-auto">
+        <Outlet />
+      </div>
+      {location.pathname !== "/login" && (
+        <Menu
+          currentTab={
+            location.pathname.split("/")[1] === ""
+              ? "feed"
+              : location.pathname.split("/")[1]
+          }
+        />
+      )}
     </div>
   );
 };

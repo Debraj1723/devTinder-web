@@ -3,6 +3,7 @@ import constants from "../utils/constant";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "../utils/connectionSlice";
+import Menu from "./Menu";
 
 const Connections = () => {
   const connections = useSelector((store) => store.connections);
@@ -26,42 +27,43 @@ const Connections = () => {
 
   if (connections.length === 0) {
     return (
-      <div className="flex justify-center my-10">
-        <h1 className="text-bold text-2xl">No Connections Found</h1>
-      </div>
+      <ul className="list bg-base-300 rounded-box shadow-md my-5 mx-5">
+        <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
+          No Connections Found
+        </li>
+      </ul>
     );
   }
 
   return (
-    <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Connections</h1>
-
-      {connections.map((connection) => {
-        const { firstName, lastName, photoUrl, age, gender, about } =
-          connection;
-
-        return (
-          <div
-            className="flex m-5 p-4 rounded-lg bg-base-300 w-1/2 mx-auto"
-            key={connection._id}
-          >
-            <div>
-              <img
-                alt="photo"
-                className="w-20 h-20 rounded-full"
-                src={photoUrl}
-              />
-            </div>
-            <div className="text-left mx-4">
-              <h2 className="font-bold text-xl">
-                {firstName + " " + lastName}
-              </h2>
-              {age && gender && <p>{age + ", " + gender}</p>}
-              <p>{about}</p>
-            </div>
-          </div>
-        );
-      })}
+    <div>
+      <ul className="list bg-base-300 rounded-box shadow-md my-5 mx-5">
+        <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
+          Your connections
+        </li>
+        {connections.map((connection) => {
+          const { firstName, lastName, photoUrl } = connection;
+          return (
+            <li className="list-row" key={connection._id}>
+              <div>
+                <img className="size-10 rounded-box" src={photoUrl} />
+              </div>
+              <div>
+                <div>{firstName + " " + lastName}</div>
+                <div className="text-xs uppercase font-semibold opacity-60">
+                  online
+                </div>
+              </div>
+              <p className="list-col-wrap text-xs">
+                "Remaining Reason" became an instant hit, praised for its
+                haunting sound and emotional depth. A viral performance brought
+                it widespread recognition, making it one of Dio Lupa’s most
+                iconic tracks.
+              </p>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

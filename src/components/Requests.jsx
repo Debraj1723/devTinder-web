@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import constants from "../utils/constant";
 import { addRequests, removeRequests } from "../utils/requestStore";
 import { useEffect } from "react";
+import Menu from "./Menu";
 
 const Requests = () => {
   const requests = useSelector((store) => store.requests);
@@ -39,56 +40,55 @@ const Requests = () => {
 
   if (requests.length === 0) {
     return (
-      <div className="flex justify-center my-10">
-        <h1 className="text-bold text-2xl">No Requests Found</h1>
+      <div>
+        <ul className="list bg-base-300 rounded-box shadow-md my-5 mx-5">
+          <li className="p-2 text-xs opacity-60 tracking-wide">
+            No requests found
+          </li>
+        </ul>
       </div>
     );
   }
 
   return (
-    <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Requests</h1>
-
-      {requests.map((request) => {
-        const { firstName, lastName, photoUrl, age, gender, about } =
-          request.fromUserID;
-
-        return (
-          <div
-            className="flex justify-between items-center m-5 p-4 rounded-lg bg-base-300 w-2/3 mx-auto"
-            key={request._id}
-          >
-            <div>
-              <img
-                alt="photo"
-                className="w-20 h-20 rounded-full"
-                src={photoUrl}
-              />
-            </div>
-            <div className="text-left mx-4">
-              <h2 className="font-bold text-xl">
-                {firstName + " " + lastName}
-              </h2>
-              {age && gender && <p>{age + ", " + gender}</p>}
-              <p>{about}</p>
-            </div>
-            <div>
-              <button
-                className="btn btn-primary mx-2"
-                onClick={() => reviewRequest("Rejected", request._id)}
-              >
-                Reject
-              </button>
-              <button
-                className="btn btn-secondary mx-2"
-                onClick={() => reviewRequest("Accepted", request._id)}
-              >
-                Accept
-              </button>
-            </div>
-          </div>
-        );
-      })}
+    <div>
+      <ul className="list bg-base-300 rounded-box shadow-md my-5 mx-5">
+        <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
+          Your requests
+        </li>
+        {requests.map((request) => {
+          const { firstName, lastName, photoUrl, age, gender, about } =
+            request.fromUserID;
+          return (
+            <li className="list-row" key={request._id}>
+              <div>
+                <img className="size-10 rounded-box" src={photoUrl} />
+              </div>
+              <div>
+                <div> {firstName + " " + lastName}</div>
+                <div className="text-xs uppercase font-semibold opacity-60">
+                  {age && gender && <p>{age + ", " + gender}</p>}
+                  <p>{about}</p>
+                </div>
+              </div>
+              <div className="list-col-wrap text-xs flex justify-end gap-2">
+                <button
+                  className="btn btn-soft btn-error"
+                  onClick={() => reviewRequest("Rejected", request._id)}
+                >
+                  Reject
+                </button>
+                <button
+                  className="btn btn-soft btn-success"
+                  onClick={() => reviewRequest("Accepted", request._id)}
+                >
+                  Accept
+                </button>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

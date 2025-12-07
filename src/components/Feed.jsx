@@ -4,6 +4,7 @@ import { use, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
+import Menu from "./Menu";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
@@ -26,16 +27,24 @@ const Feed = () => {
 
   if (!feed) return;
 
-  if(feed.length <= 0){
+  if (feed.length <= 0) {
     return (
-      <h1 className="flex justify-center my-10">No new users found!</h1>
-    )
+      <div>
+        <h1 className="flex justify-center my-10">No new users found!</h1>
+        {/* <Menu currentTab={'feed'} /> */}
+      </div>
+    );
   }
 
   return (
-    feed && <div className="flex justify-center my-10">
-      <UserCard user={feed[0]} />
-    </div>
+    feed && (
+      <div>
+        <div className="flex justify-center mx-5 my-5">
+          <UserCard user={feed[0]} />
+        </div>
+        {/* <Menu currentTab={'feed'} /> */}
+      </div>
+    )
   );
 };
 
