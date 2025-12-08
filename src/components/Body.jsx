@@ -34,13 +34,21 @@ const Body = () => {
     }
   }, []);
 
+  console.log(location.pathname.split("/")[1]);
+
   return (
     <div className="max-w-[500px] mx-auto h-screen">
       <Navbar />
-      <div  className="h-[calc(100vh-64px-82px)]  w-full overflow-y-auto">
+      <div
+        className={
+          !["login", "chat"].includes(location.pathname.split("/")[1])
+            ? "w-full overflow-y-auto h-[calc(100vh-64px-82px)]"
+            : "w-full overflow-y-auto h-[calc(100vh-64px)]"
+        }
+      >
         <Outlet />
       </div>
-      {location.pathname !== "/login" && (
+      {!["login", "chat"].includes(location.pathname.split("/")[1]) && (
         <Menu
           currentTab={
             location.pathname.split("/")[1] === ""

@@ -1,10 +1,9 @@
 import axios from "axios";
 import constants from "../utils/constant";
-import { use, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
-import Menu from "./Menu";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
