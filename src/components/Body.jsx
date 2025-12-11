@@ -34,8 +34,6 @@ const Body = () => {
     }
   }, []);
 
-  console.log(location.pathname.split("/")[1]);
-
   return (
     <div className="max-w-[500px] mx-auto h-screen">
       <Navbar />
