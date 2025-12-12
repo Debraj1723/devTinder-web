@@ -1,5 +1,5 @@
 const constants = {
-  baseUrl: (location.hostname === "localhost" ? "http://localhost:9000/" : "/api"),
+  baseUrl: (location.hostname === "localhost" ? "http://localhost:9000/" : "/api/"),
 
   menu: [
     { displayName: "Feed", value: "feed" },
