@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
+import constants from "../utils/constant";
+import axios from "axios";
 
 const Chat = () => {
   const { userID } = useParams();
@@ -10,14 +12,33 @@ const Chat = () => {
   const user = useSelector((store) => store.user);
   const personalUserID = user?._id;
 
+  const fetchChats = async () => {
+    try {
+      const res = await axios.post(
+        constants.baseUrl + "chats",
+        { participants: [userID, personalUserID] },
+        {
+          withCredentials: true,
+        }
+      );
+      setMessages(res.data);
+    } catch (e) {
+      //hanfdle error
+    }
+  };
+
+  useEffect(() => {
+    fetchChats();
+  }, []);
+
   useEffect(() => {
     const socket = createSocketConnection();
     if (socket && personalUserID) {
       socket.emit("joinChat", { receiver: userID, sender: personalUserID });
     }
 
-    socket.on("messageReceived", ({ receiver, sender, text }) => {
-      setMessages((messages) => [...messages, { receiver, sender, text }]);
+    socket.on("messageReceived", ({ sender, text }) => {
+      setMessages((messages) => [...messages, { senderID: sender, text }]);
     });
 
     return () => {
@@ -50,12 +71,12 @@ const Chat = () => {
         {messages.map((message) => {
           return (
             <div>
-              {message.sender !== personalUserID && (
+              {message.senderID !== personalUserID && (
                 <div className="chat chat-start">
                   <div className="chat-bubble">{message.text}</div>
                 </div>
               )}
-              {message.sender === personalUserID && (
+              {message.senderID === personalUserID && (
                 <div className="chat chat-end">
                   <div className="chat-bubble">{message.text}</div>
                 </div>
