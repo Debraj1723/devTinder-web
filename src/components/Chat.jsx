@@ -86,7 +86,7 @@ const Chat = () => {
         })}
       </div>
 
-      <footer className="flex p-3 bg-base-300 shrink-0 absolute bottom-0 w-full max-w-[500px]">
+      <footer className="flex p-3 bg-base-300 shrink-0 fixed bottom-0 w-full max-w-[500px]">
         <input
           type="text"
           placeholder="Type a message..."
