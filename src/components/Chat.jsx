@@ -119,7 +119,7 @@ const Chat = () => {
       )}
       {!isLoading && (
         <div
-          className="p-4 overflow-y-auto absolute w-full top-[124px] h-[calc(100vh-192px)] max-w-[500px] pb-3"
+          className="overflow-y-auto absolute w-full top-[125px] h-[calc(100vh-198px)] max-w-[500px] py-[30px] px-4"
           id="chat-box"
           ref={chatRef}
         >

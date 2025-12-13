@@ -36,7 +36,7 @@ const Body = () => {
     <div>
       <div className="relative max-w-[500px] mx-auto h-screen">
         <Navbar />
-        <div className="w-full  h-[calc(100vh)] pt-16">
+        <div className="w-full pt-16">
           <Outlet />
         </div>
       </div>
