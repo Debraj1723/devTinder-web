@@ -100,7 +100,7 @@ const Chat = () => {
   return (
     <div>
       {targetUserDetails && (
-        <div className="flex gap-4 w-full max-w-[500px] items-center py-[10px] px-[16px] bg-base-300 border-t border-black rounded-bl-[14px] rounded-br-[14px] fixed top-[64px]">
+        <div className="flex gap-4 w-full max-w-[500px] items-center py-[10px] px-[16px] bg-base-300 border-t border-black rounded-bl-[14px] rounded-br-[14px]">
           <div className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img
@@ -119,7 +119,7 @@ const Chat = () => {
       )}
       {!isLoading && (
         <div
-          className="overflow-y-auto absolute w-full top-[125px] h-[calc(100vh-66px-61px-64px)] max-w-[500px] py-[30px] px-4"
+          className="overflow-y-auto w-full h-[calc(100vh-66px-61px-64px)] max-w-[500px] py-[30px] px-4"
           id="chat-box"
           ref={chatRef}
         >
