@@ -100,7 +100,7 @@ const Chat = () => {
   return (
     <div>
       {targetUserDetails && (
-        <div className="flex gap-4 w-full max-w-[500px] items-center py-[10px] px-[16px] bg-base-300 border-t border-black rounded-bl-[14px] rounded-br-[14px] fixed bottom-[calc(66px+477px)]">
+        <div className="flex gap-4 w-full max-w-[500px] items-center py-[10px] px-[16px] bg-base-300 border-t border-black rounded-bl-[14px] rounded-br-[14px] fixed top-[64px]">
           <div className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img
