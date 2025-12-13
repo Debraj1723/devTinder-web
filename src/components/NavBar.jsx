@@ -1,35 +1,27 @@
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import constants from "../utils/constant";
-import { removeUser } from "../utils/userSlice";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import Menu from "./Menu";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        constants.baseUrl + "logout",
-        {},
-        { withCredentials: true }
-      );
-      dispatch({ type: "logout" });
-      navigate("/login");
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const [showMenu, toggleMenu] = useState(false);
 
   return (
-    <div className="navbar bg-base-300 shadow-sm">
-      <div className="flex-1">
+    <div className="navbar bg-base-300 shadow-sm fixed w-full max-w-[500px] z-[12]">
+      <div className="flex flex-1">
+        {user && (
+          <img
+            className="ml-2"
+            src="src/assets/more.svg"
+            onClick={() => toggleMenu(!showMenu)}
+          />
+        )}
         <Link to={"/"} className="btn btn-ghost text-xl">
           👨‍💻tinderLite
         </Link>
       </div>
+      {showMenu && <Menu />}
       <div className="flex gap-2">
         {user && (
           <div className="dropdown dropdown-end  mx-5 flex">
@@ -43,26 +35,6 @@ const Navbar = () => {
                 <img alt="Tailwind CSS Navbar component" src={user.photoUrl} />
               </div>
             </div>
-            <ul
-              tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <Link to={"/profile"} className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </Link>
-              </li>
-              <li>
-                <Link to={"/connections"}>Connections</Link>
-              </li>
-              <li>
-                <Link to={"/requests"}>Requests</Link>
-              </li>
-              <li onClick={handleLogout}>
-                <a>Logout</a>
-              </li>
-            </ul>
           </div>
         )}
       </div>
