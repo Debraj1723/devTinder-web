@@ -37,7 +37,7 @@ const Menu = () => {
   if (showData) {
     return (
       <div>
-        <ul className="menu menu-vertical bg-base-300  p-3 fixed w-1/2 h-screen top-0 z-[14] shadow-xl left-0 h-[calc(100vh-64px)] top-16">
+        <ul className="menu menu-vertical bg-base-300  p-3 absolute w-1/2 h-screen top-0 z-[14] shadow-xl left-0 h-[calc(100vh-64px)] top-16">
           {menu.map((e, i) => {
             console.log(currentTab === e.value, { currentTab, value: e.value });
             return (
