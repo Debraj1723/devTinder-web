@@ -38,7 +38,7 @@ const Connections = () => {
 
   return (
     <div>
-      <ul className="list ">
+      <ul className="list bg-base-100 rounded-box shadow-md">
         <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
           Your connections
         </li>
@@ -48,20 +48,23 @@ const Connections = () => {
             <Link to={"/chat/" + connection._id} key={connection._id}>
               <li className="list-row">
                 <div>
-                  <img className="size-10 rounded-box" src={photoUrl} />
+                  <img
+                    className="size-10 rounded-box"
+                    src={photoUrl}
+                  />
                 </div>
                 <div>
                   <div>{firstName + " " + lastName}</div>
                   <div className="text-xs uppercase font-semibold opacity-60">
-                    online
+                    Online
                   </div>
                 </div>
-                {/* <p className="list-col-wrap text-xs">
-                  "Remaining Reason" became an instant hit, praised for its
-                  haunting sound and emotional depth. A viral performance
-                  brought it widespread recognition, making it one of Dio Lupa’s
-                  most iconic tracks.
-                </p> */}
+                <button
+                    className="btn btn-soft btn-success"
+                    onClick={() => reviewRequest("Accepted", request._id)}
+                  >
+                    Chat
+                  </button>
               </li>
             </Link>
           );
