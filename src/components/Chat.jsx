@@ -59,7 +59,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full max-w-lg mx-auto ">
+    <div className="flex flex-col w-full max-w-lg mx-auto ">
       <header className="bg-green-500 text-white p-3 text-center border-b border-green-600 shrink-0 absolute w-full max-w-[500px]">
         <h3 className="text-lg font-semibold">Simple Chat Room</h3>
       </header>

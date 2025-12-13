@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Menu from "./Menu";
+import more from "../assets/more.svg";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
@@ -13,7 +14,7 @@ const Navbar = () => {
         {user && (
           <img
             className="ml-2"
-            src="src/assets/more.svg"
+            src={more}
             onClick={() => toggleMenu(!showMenu)}
           />
         )}

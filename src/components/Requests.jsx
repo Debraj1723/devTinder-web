@@ -41,7 +41,7 @@ const Requests = () => {
   if (requests.length === 0) {
     return (
       <div>
-        <ul className="list bg-base-300 rounded-box shadow-md my-5 mx-5">
+        <ul className="list ">
           <li className="p-2 text-xs opacity-60 tracking-wide">
             No requests found
           </li>
@@ -52,7 +52,7 @@ const Requests = () => {
 
   return (
     <div>
-      <ul className="list bg-base-300 rounded-box shadow-md my-5 mx-5">
+      <ul className="list ">
         <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
           Your requests
         </li>
