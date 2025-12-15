@@ -8,6 +8,9 @@ import Profile from "./components/Profile";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Chat from "./components/Chat";
+import Groups from "./components/Groups";
+import CreateGroup from "./components/createGroup";
+import GroupChat from "./components/GroupChat";
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
               <Route path="/connections" element={<Connections />} />
               <Route path="/requests" element={<Requests />} />
               <Route path="/chat/:userID" element={<Chat />} />
+              <Route path="/group-chat/:groupID" element={<GroupChat />} />
+              <Route path="/groups" element={<Groups />} />
+              <Route path="/create-group" element={<CreateGroup />} />
             </Route>
           </Routes>
         </BrowserRouter>

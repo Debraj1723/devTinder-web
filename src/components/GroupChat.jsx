@@ -5,12 +5,12 @@ import { useSelector } from "react-redux";
 import constants from "../utils/constant";
 import axios from "axios";
 
-const Chat = () => {
-  const { userID: targetUserID } = useParams();
+const GroupChat = () => {
+  const { groupID } = useParams();
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [targetUserDetails, setTargetUserDetails] = useState(null);
+  const [groupDetails, setGroupDetails] = useState(null);
 
   const user = useSelector((store) => store.user);
   const chatRef = useRef(null);
@@ -20,12 +20,13 @@ const Chat = () => {
     try {
       setIsLoading(true);
       const res = await axios.post(
-        constants.baseUrl + "chats",
-        { participants: [targetUserID, personalUserID] },
+        constants.baseUrl + "group-chats",
+        { participants: groupDetails.members },
         {
           withCredentials: true,
         }
       );
+      console.log(res.data);
       setMessages(res.data);
       if (chatRef.current) {
         chatRef.current.scrollTo({
@@ -39,56 +40,53 @@ const Chat = () => {
     }
   };
 
-  const fetchProfileDetails = async () => {
+  const fetchGroupDetails = async () => {
     try {
       const res = await axios.get(
-        constants.baseUrl + "profile-details/" + targetUserID,
+        constants.baseUrl + "groups/details/" + groupID,
         {
           withCredentials: true,
         }
       );
-      setTargetUserDetails(res.data);
+      setGroupDetails(res.data);
     } catch (e) {
       //hanfdle error
     }
   };
 
   useEffect(() => {
-    fetchProfileDetails();
-    fetchChats();
-  }, []);
+    fetchGroupDetails();
+  }, [groupID]);
 
   useEffect(() => {
-    const socket = createSocketConnection();
-    if (socket && personalUserID) {
-      socket.emit("joinChat", {
-        participants: [targetUserID, personalUserID],
-      });
-      if (chatRef.current) {
-        chatRef.current.scrollTo({
-          top: chatRef.current.scrollHeight,
-          behavior: "smooth",
-        });
-      }
-    }
+    if (!groupDetails?.members?.length) return;
+    fetchChats();
+  }, [groupDetails]);
 
-    socket.on("messageReceived", ({ sender, text }) => {
-      setMessages((messages) => [...messages, { senderID: sender, text }]);
+  useEffect(() => {
+    if (!groupDetails) return;
+
+    const socket = createSocketConnection();
+
+    socket.emit("joinChat", {
+      participants: groupDetails.members,
     });
 
-    return () => {
-      if (socket) {
-        socket.disconnect();
-        console.log("Socket disconnected");
-      }
-    };
-  }, [personalUserID, targetUserID, messages]);
+    socket.on("groupMessageReceived", ({ sender, senderName, text }) => {
+      setMessages((prev) => [
+        ...prev,
+        { senderID: { _id: sender, firstName: senderName }, text },
+      ]);
+    });
 
+    return () => socket.disconnect();
+  }, [groupDetails]);
   const handleSendMessage = () => {
     const socket = createSocketConnection();
-    socket.emit("sendMessage", {
-      participants: [targetUserID, personalUserID],
+    socket.emit("sendGroupMessage", {
+      participants: groupDetails.members,
       sender: personalUserID,
+      senderName: user.firstName,
       text,
     });
     setText("");
@@ -96,17 +94,17 @@ const Chat = () => {
 
   return (
     <div>
-      {targetUserDetails && (
+      {groupDetails && (
         <div className="flex gap-4 w-full max-w-[500px] items-center py-[10px] px-[16px] bg-base-300 border-t border-black rounded-bl-[14px] rounded-br-[14px] fixed top-[64px]">
           <div className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src={targetUserDetails.photoUrl}
+                src={groupDetails.picture}
               />
             </div>
           </div>
-          <p>{targetUserDetails.firstName} </p>
+          <p>{groupDetails.name} </p>
         </div>
       )}
       {isLoading && (
@@ -123,12 +121,13 @@ const Chat = () => {
           {messages.map((message, i) => {
             return (
               <div key={i}>
-                {message.senderID !== personalUserID && (
-                  <div className="chat chat-start">
-                    <div className="chat-bubble">{message.text}</div>
+                {message.senderID._id !== personalUserID && (
+                  <div class="chat chat-start">
+                    <div class="chat-header">{message.senderID.firstName}</div>
+                    <div class="chat-bubble">{message.text}</div>
                   </div>
                 )}
-                {message.senderID === personalUserID && (
+                {message.senderID._id === personalUserID && (
                   <div className="chat chat-end">
                     <div className="chat-bubble">{message.text}</div>
                   </div>
@@ -160,4 +159,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default GroupChat;

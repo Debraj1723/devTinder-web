@@ -7,7 +7,6 @@ import { addUser } from "../utils/userSlice";
 
 const EditProfile = () => {
   const userData = useSelector((store) => store.user);
-  console.log(userData);
   const [showToast, setToast] = useState(false);
 
   const [firstName, setFirstName] = useState(userData.firstName || "");

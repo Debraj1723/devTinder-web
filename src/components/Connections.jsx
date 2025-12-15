@@ -61,7 +61,6 @@ const Connections = () => {
                 </div>
                 <button
                     className="btn btn-soft btn-success"
-                    onClick={() => reviewRequest("Accepted", request._id)}
                   >
                     Chat
                   </button>
