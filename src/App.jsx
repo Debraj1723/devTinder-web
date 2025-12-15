@@ -9,7 +9,7 @@ import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Chat from "./components/Chat";
 import Groups from "./components/Groups";
-import CreateGroup from "./components/createGroup";
+import CreateGroup from "./components/CreateGroup";
 import GroupChat from "./components/GroupChat";
 
 function App() {
