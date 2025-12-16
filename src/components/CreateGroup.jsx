@@ -61,6 +61,7 @@ const CreateGroup = () => {
 
   return (
     <div>
+      <div></div>
       <div className="text-center space-y-1 my-5">
         <h1 className="text-lg font-medium text-gray-100">Create a group</h1>
         <p className="text-xs text-gray-500">
